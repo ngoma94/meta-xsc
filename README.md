@@ -32,7 +32,10 @@ sudo apt install bc build-essential chrpath cpio diffstat lz4 gawk git python3 t
 mkdir $HOME/yocto-xsc
 cd $HOME/yocto-xsc/
 
-# Download Poky (kirkstone)
+# Download meta-xsc (This repository)
+git clone https://github.com/ngoma94/meta-xsc.git
+
+# Download Poky (version: kirkstone)
 git clone https://git.yoctoproject.org/git/poky -b kirkstone
 
 # Download meta-raspberrypi
@@ -46,9 +49,9 @@ source poky/oe-init-build-env
 
 # Add new layers
 cd $HOME/yocto-xsc/build
+bitbake-layers add-layer ../meta-xsc
 bitbake-layers add-layer ../meta-raspberrypi
-bitbake-layers add-layer ../meta-openembedded/meta-*
-itbake-layers add-layer ../meta-openembedded/meta-oe/ ../meta-openembedded/meta-multimedia/ ../meta-openembedded/meta-networking ../meta-openembedded/meta-python
+bitbake-layers add-layer ../meta-openembedded/meta-oe/ ../meta-openembedded/meta-multimedia/ ../meta-openembedded/meta-networking ../meta-openembedded/meta-python
 
 # On Ubuntu 24.04 or later, AppArmor restricts unprivileged user namesepaces.
 # This blocks bitbake from functioning properly.
@@ -62,7 +65,7 @@ bitbake xsc-image
 
 #### Image path
 ```
-$HOME/yocto-xsc/tmp/deploy/images/raspberrypi4/xsc-image-raspberrypi4.wic.bz2
+$HOME/yocto-xsc/build/tmp/deploy/images/raspberrypi4/xsc-image-raspberrypi4.wic.bz2
 ```
 
 
